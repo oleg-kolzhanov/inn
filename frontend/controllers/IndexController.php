@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\services\NpdService;
 use Yii;
 use yii\web\Controller;
 use frontend\models\InnForm;
@@ -31,6 +32,9 @@ class IndexController extends Controller
     {
         $model = new InnForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $service = new NpdService();
+            $service->check($model->inn);
+
 //            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
 //                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
 //            } else {
