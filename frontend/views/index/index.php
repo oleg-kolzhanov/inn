@@ -27,9 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 $form->field($model, 'inn')
                 ->widget(MaskedInput::className(), [
                     'mask'=>'9999-999999-99',
-//                    'clientOptions' => [
-//                        'removeMaskOnSubmit' => true,
-//                    ]
                 ])
                 ->textInput([
                     'placeholder'=>'4826-080132-31',

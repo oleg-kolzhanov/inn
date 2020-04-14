@@ -27,6 +27,40 @@ class InnFLValidator extends Validator
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function clientValidateAttribute($model, $attribute, $view)
+    {
+        $label = $model->getAttributeLabel($attribute);
+
+        return <<<JS
+let result = false;
+let inn = value.toString().replace(/-/g, '');
+console.log(attribute   );
+
+if (/[^0-9]/.test(inn)) {
+    messages.push('Значение «{$label}» должно содержать 12 цифр.');
+} else {
+    let checksum = function (inn, coefficients) {
+        var n = 0;
+        for (var i in coefficients) {
+            n += coefficients[i] * inn[i];
+        }
+        return parseInt(n % 11 % 10);
+    };
+    let n11 = checksum(inn, [7, 2, 4, 10, 3, 5, 9, 4, 6, 8]);
+    let n12 = checksum(inn, [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8]);
+    if ((n11 === parseInt(inn[10])) && (n12 === parseInt(inn[11]))) {
+        result = true;
+    }
+    if (!result) {
+        messages.push('Некорректное значение «{$label}».');
+    }
+}
+JS;
+    }
+
+    /**
      * Вычисление чексуммы для проверки ИНН физщического лица.
      * @param $value string значение
      * @param $coefficients array коэффициенты
