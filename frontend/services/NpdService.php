@@ -2,6 +2,7 @@
 namespace frontend\services;
 
 use yii\httpclient\Client;
+use frontend\models\Inn;
 
 class NpdService
 {
@@ -14,6 +15,21 @@ class NpdService
     const DATE_FORMAT = 'Y-m-d';
 
     public function check($value) {
+        $model = new Inn();
+
+        $inn = Inn::findOne(['value' => $value]);
+//        if (empty($inn)) {
+//            $inn = new Inn();
+//            $inn->value = $value;
+//        } else {
+//            if (!$inn->isOutdated()) {
+//                return [
+//                    'status' => $inn->status,
+//                    'message' => $inn->message,
+//                ];
+//            }
+//        }
+
         $client = new Client(['baseUrl' => self::getBaseUrl()]);
         $response = $client->createRequest()
             ->setMethod('POST')
@@ -25,7 +41,20 @@ class NpdService
             ])
             ->send();
         if ($response->isOk) {
-            $newUserId = $response->data['id'];
+            $inn->status = $response->data['status'];
+            $inn->message = $response->data['message'];
+            $inn->markAttributeDirty('status');
+            $inn->markAttributeDirty('message');
+            $inn->save();
+            return [
+                'status' => $inn->status,
+                'message' => $inn->message,
+            ];
+        } else {
+            return [
+                'code'=> $response->data['code'],
+                'message' => $response->data['message'],
+            ];
         }
     }
 

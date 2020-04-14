@@ -39,10 +39,9 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-                '/' => 'index/index'
-            ],
+            'rules' => [],
         ],
     ],
+    'defaultRoute'=> 'index/index',
     'params' => $params,
 ];

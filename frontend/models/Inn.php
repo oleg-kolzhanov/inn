@@ -3,14 +3,17 @@
 namespace frontend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * Модель для таблицы "inn".
  *
  * @property int $id
- * @property string $value инн
- * @property int|null $created_at дата и время создания записми
- * @property int|null $updated_at дата и время обновления записи
+ * @property string $value ИНН
+ * @property bool $status Статус
+ * @property string $message Сообщение
+ * @property int|null $created_at Дата и время создания записми
+ * @property int|null $updated_at Дата и время обновления записи
  */
 class Inn extends \yii\db\ActiveRecord
 {
@@ -19,7 +22,22 @@ class Inn extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%inn}}';
+        return 'inn';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'
+            ],
+        ];
     }
 
     /**
@@ -28,10 +46,13 @@ class Inn extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value'], 'required'],
+            [['value', 'status', 'message'], 'required'],
+            [['status'], 'boolean'],
             [['created_at', 'updated_at'], 'default', 'value' => null],
             [['created_at', 'updated_at'], 'integer'],
             [['value'], 'string', 'max' => 12],
+            [['message'], 'string', 'max' => 255],
+            [['value'], 'unique'],
         ];
     }
 
@@ -43,8 +64,14 @@ class Inn extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'value' => 'ИНН',
+            'status' => 'Статус',
+            'message' => 'Сообщение',
             'created_at' => 'Создано',
             'updated_at' => 'Обновлено',
         ];
+    }
+
+    public function isOutdated() {
+        return true;
     }
 }
