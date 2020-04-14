@@ -18,7 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="help-block">
         Введите ИНН физического лица.
     </p>
-
+    <br />
+    
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'inn-form']); ?>

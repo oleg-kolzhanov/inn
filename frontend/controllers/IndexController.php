@@ -33,15 +33,12 @@ class IndexController extends Controller
         $model = new InnForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $service = new NpdService();
-            $service->check($model->inn);
-
-//            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-//                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-//            } else {
-//                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-//            }
-
-            return $this->refresh();
+            $result = $service->check($model->inn);
+            return $this->render('result', [
+                'model' => $model,
+                'result' => $result,
+            ]);
+//            return $this->refresh();
         } else {
             return $this->render('index', [
                 'model' => $model,
