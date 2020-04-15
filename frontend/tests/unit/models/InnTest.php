@@ -7,6 +7,7 @@ class InnTest extends \Codeception\Test\Unit
 {
     /**
      * @var \frontend\tests\UnitTester
+     * @see http://bologer.ru/yii2-basic-pishem-i-zapuskaem-testy-s-codeception/
      */
     protected $tester;
     
