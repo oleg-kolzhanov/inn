@@ -18,6 +18,11 @@ use yii\behaviors\TimestampBehavior;
 class Inn extends \yii\db\ActiveRecord
 {
     /**
+     * Период актуальности данных в БД.
+     */
+    const OUTDATED_PERIOD = '1 day';
+
+    /**
      * {@inheritdoc}
      */
     public static function tableName()
@@ -71,7 +76,13 @@ class Inn extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * Проверка на актуальность данных в БД.
+     * @return bool
+     */
     public function isOutdated() {
-        return true;
+        $outdated =  strtotime('+' . self::OUTDATED_PERIOD, $this->updated_at);
+        $now = time();
+        return ($outdated < $now);
     }
 }

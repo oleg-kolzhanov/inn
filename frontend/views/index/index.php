@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         Введите ИНН физического лица.
     </p>
     <br />
-    
+
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'inn-form']); ?>
@@ -27,10 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <?=
                 $form->field($model, 'inn')
                 ->widget(MaskedInput::className(), [
-                    'mask'=>'9999-999999-99',
+                    'mask'=>'999999999999',
                 ])
                 ->textInput([
-                    'placeholder'=>'4826-080132-31',
+                    'placeholder'=>'482608013231',
                     'class' => 'form-control input-lg'
                 ]);
             ?>

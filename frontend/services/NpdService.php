@@ -4,36 +4,81 @@ namespace frontend\services;
 use yii\httpclient\Client;
 use frontend\models\Inn;
 
+/**
+ * Сервис проверки ИНН физического лица.
+ * Class NpdService
+ * @package frontend\services
+ */
 class NpdService
 {
-//    const ENDPOINT = 'https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status';
+    /**
+     * Хост API.
+     */
     const HOST = 'https://statusnpd.nalog.ru';
+
+    /**
+     * Порт API.
+     */
     const PORT = 443;
+
+    /**
+     * Раздел API.
+     */
     const FOLDER = 'api';
+
+    /**
+     * Версия API.
+     */
     const VERSION = 1;
+
+    /**
+     * Эндпоинт проверки ИНН.
+     */
     const ENDPOINT = 'tracker/taxpayer_status';
+
+    /**
+     * Метод API.
+     */
+    const METHOD = 'POST';
+
+    /**
+     * Формат запроса к API.
+     */
+    const FORMAT = Client::FORMAT_JSON;
+
+    /**
+     * Формат даты.
+     */
     const DATE_FORMAT = 'Y-m-d';
 
+    /**
+     * Проверка ИНН физического лица.
+     * Результаты проверки кэшируются в БД на сутки.
+     * @param $value string значение ИНН
+     * @return array code - код ошибки, status - статус, message - сообщение.
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\httpclient\Exception
+     */
     public function check($value) {
         $model = new Inn();
 
         $inn = Inn::findOne(['value' => $value]);
-//        if (empty($inn)) {
-//            $inn = new Inn();
-//            $inn->value = $value;
-//        } else {
-//            if (!$inn->isOutdated()) {
-//                return [
-//                    'status' => $inn->status,
-//                    'message' => $inn->message,
-//                ];
-//            }
-//        }
+        if (empty($inn)) {
+            $inn = new Inn();
+            $inn->value = $value;
+        } else {
+            if (!$inn->isOutdated()) {
+                return [
+                    'status' => $inn->status,
+                    'message' => $inn->message,
+                ];
+            }
+        }
 
         $client = new Client(['baseUrl' => self::getBaseUrl()]);
         $response = $client->createRequest()
-            ->setMethod('POST')
-            ->setFormat(Client::FORMAT_JSON)
+            ->setMethod(self::METHOD)
+            ->setFormat(self::FORMAT)
             ->setUrl(self::ENDPOINT)
             ->setData([
                 'inn' => $value,
@@ -58,11 +103,11 @@ class NpdService
         }
     }
 
+    /**
+     * Получение базового Url сервиса проверки ИНН.
+     * @return string
+     */
     static protected function getBaseUrl() {
         return self::HOST . ':' . self::PORT . '/' . self::FOLDER . '/v' . self::VERSION;
-    }
-
-    static protected function getUrl() {
-        return self::getBaseUrl() . '/' . self::ENDPOINT;
     }
 }

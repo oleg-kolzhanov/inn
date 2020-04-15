@@ -24,9 +24,11 @@ class IndexController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Проверка ИНН физическогог лица.
      *
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\httpclient\Exception
      */
     public function actionIndex()
     {
@@ -38,7 +40,6 @@ class IndexController extends Controller
                 'model' => $model,
                 'result' => $result,
             ]);
-//            return $this->refresh();
         } else {
             return $this->render('index', [
                 'model' => $model,

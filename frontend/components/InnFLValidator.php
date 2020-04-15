@@ -35,8 +35,7 @@ class InnFLValidator extends Validator
 
         return <<<JS
 let result = false;
-let inn = value.toString().replace(/-/g, '');
-console.log(attribute   );
+let inn = value.toString();
 
 if (/[^0-9]/.test(inn)) {
     messages.push('Значение «{$label}» должно содержать 12 цифр.');
