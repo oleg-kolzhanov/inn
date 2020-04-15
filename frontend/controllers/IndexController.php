@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\services\NpdService;
 use Yii;
 use yii\web\Controller;
 use frontend\models\InnForm;
@@ -23,21 +24,22 @@ class IndexController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Проверка ИНН физическогог лица.
      *
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\httpclient\Exception
      */
     public function actionIndex()
     {
         $model = new InnForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-//            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-//                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-//            } else {
-//                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-//            }
-
-            return $this->refresh();
+            $service = new NpdService();
+            $result = $service->check($model->inn);
+            return $this->render('result', [
+                'model' => $model,
+                'result' => $result,
+            ]);
         } else {
             return $this->render('index', [
                 'model' => $model,
