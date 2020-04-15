@@ -23,7 +23,7 @@ class InnForm extends Model
     {
         return [
             ['inn', 'required'],
-            ['inn', 'match', 'pattern' => '/^(\d{12})$/', 'message' => 'Значение «ИНН» должно содержать 12 цифр'],
+            ['inn', 'match', 'pattern' => '/^(\d{12})$/', 'message' => 'Значение «ИНН» должно содержать 12 цифр.'],
             ['inn', InnFLValidator::className()],
         ];
     }

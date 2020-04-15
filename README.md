@@ -19,8 +19,14 @@
 * docker-compose run --rm yii-test migrate
 * docker-compose run --rm codecept build
 
-Запуск тестов:
+Запуск всех тестов:
 * docker-compose run --rm codecept run
+
+Запуск юнит-тестов:
+* docker-compose run --rm codecept run unit -c frontend
+
+Запуск приемочных тестов:
+* docker-compose run --rm codecept run acceptance -c frontend
 
 Запуск одного теста:
 * docker-compose run --rm codecept run acceptance HomeCest:checkHome -c frontend
