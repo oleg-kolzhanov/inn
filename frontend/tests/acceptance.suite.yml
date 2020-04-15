@@ -3,7 +3,9 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://fl.ru.test/
+            url: 'http://fl.ru.test'
+            host: hub
+            port: 4444
             browser: chrome
         - Yii2:
             part: init

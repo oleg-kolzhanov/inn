@@ -21,3 +21,6 @@
 
 Запуск тестов:
 * docker-compose run --rm codecept run
+
+Запуск одного теста:
+* docker-compose run --rm codecept run acceptance HomeCest:checkHome -c frontend

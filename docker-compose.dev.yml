@@ -168,6 +168,7 @@ services:
       - php:${PHP_HOST}
       - nginx:${NGINX_HOST}
       - nginx:backend.${NGINX_HOST}
+      - hub:hub.${NGINX_HOST}
     volumes:
       - ${SOURCE_PATH}:${APP_PATH}
 
@@ -242,11 +243,19 @@ services:
   hub:
     image: selenium/hub:3.14.0-gallium
     container_name: ${COMPOSE_PROJECT_NAME}-selenium-hub
-    ports:
-      - "4444:4444"
+    environment:
+      - VIRTUAL_HOST=hub.${APP_HOST}
+      - VIRTUAL_PORT=${HUB_PORT}
+      - VIRTUAL_NETWORK=proxy
+      - HTTPS_METHOD=nohttps
+    expose:
+      - ${HUB_PORT}
     links:
       - nginx:${NGINX_HOST}
       - nginx:backend.${NGINX_HOST}
+    networks:
+      - proxy
+      - default
 
 volumes:
   db:
