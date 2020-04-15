@@ -4,6 +4,11 @@ namespace frontend\tests\models;
 use frontend\fixtures\InnFixture;
 use frontend\models\Inn;
 
+/**
+ * Тестирование модели Inn.
+ * Class InnTest
+ * @package frontend\tests\models
+ */
 class InnTest extends \Codeception\Test\Unit
 {
     /**
@@ -11,7 +16,10 @@ class InnTest extends \Codeception\Test\Unit
      * @see http://bologer.ru/yii2-basic-pishem-i-zapuskaem-testy-s-codeception/
      */
     protected $tester;
-    
+
+    /**
+     * {@inheritdoc}
+     */
     protected function _before()
     {
         $this->tester->haveFixtures([
@@ -22,12 +30,8 @@ class InnTest extends \Codeception\Test\Unit
         ]);
     }
 
-    protected function _after()
-    {
-    }
-
     /**
-     * Тест для добавление инн
+     * Тестирование добавления ИНН.
      */
     public function testCreate()
     {

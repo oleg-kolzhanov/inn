@@ -4,8 +4,17 @@ namespace frontend\tests\acceptance;
 use frontend\tests\AcceptanceTester;
 use yii\helpers\Url;
 
+/**
+ * Тестирование страницы проверки ИНН.
+ * Class HomeCest
+ * @package frontend\tests\acceptance
+ */
 class HomeCest
 {
+    /**
+     * Тестирование страницы.
+     * @param AcceptanceTester $I
+     */
     public function checkHome(AcceptanceTester $I)
     {
         $I->wantTo('Проверка страницы');
@@ -17,6 +26,11 @@ class HomeCest
         $I->seeElement('button', ['name' => 'inn-button']);
     }
 
+    /**
+     * Тестирование валидации формы.
+     * @param AcceptanceTester $I
+     * @throws \Exception
+     */
     public function checkValidation(AcceptanceTester $I)
     {
         $I->wantTo('Проверка валидации ИНН');
@@ -38,6 +52,11 @@ class HomeCest
         $I->see('Некорректное значение «ИНН».');
     }
 
+    /**
+     * Тестирование проверки ИНН.
+     * @param AcceptanceTester $I
+     * @throws \Exception
+     */
     public function checkValid(AcceptanceTester $I)
     {
         $I->wantTo('Проверка корректного ИНН');
