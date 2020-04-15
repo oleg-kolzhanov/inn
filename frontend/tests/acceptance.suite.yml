@@ -3,7 +3,7 @@ actor: AcceptanceTester
 modules:
     enabled:
         - WebDriver:
-            url: http://fl.ru.test
-            browser: firefox
+            url: http://fl.ru.test/
+            browser: chrome
         - Yii2:
             part: init

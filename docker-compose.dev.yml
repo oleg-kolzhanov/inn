@@ -242,8 +242,8 @@ services:
   hub:
     image: selenium/hub:3.14.0-gallium
     container_name: ${COMPOSE_PROJECT_NAME}-selenium-hub
-#    ports:
-#      - "4444:4444"
+    ports:
+      - "4444:4444"
     links:
       - nginx:${NGINX_HOST}
       - nginx:backend.${NGINX_HOST}
