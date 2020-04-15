@@ -23,6 +23,9 @@
 ## Поднятие проекта
 
 * `cp .env-sample .env`
+
+Вписать в `.env` токен гитхаба в переменную `COMPOSER_AUTH` 
+
 * `docker-compose build`
 * `docker-compose run --rm php php init`
 * `docker-compose run --rm composer install`
