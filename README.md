@@ -12,3 +12,12 @@
 * `docker-compose up -d`
 
 Когда проект собрался, открываем ссылку в браузере [http://fl.ru.test](http://fl.ru.test)
+
+## Тесты
+
+Настройка тестов:
+* docker-compose run --rm yii-test migrate
+* docker-compose run --rm codecept build
+
+Запуск тестов:
+* docker-compose run --rm codecept run
