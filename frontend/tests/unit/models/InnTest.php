@@ -2,6 +2,7 @@
 namespace frontend\tests\models;
 
 use frontend\fixtures\InnFixture;
+use frontend\models\Inn;
 
 class InnTest extends \Codeception\Test\Unit
 {
@@ -30,5 +31,12 @@ class InnTest extends \Codeception\Test\Unit
      */
     public function testCreate()
     {
+        $model = new Inn();
+        $model->load([
+            'value' => '463217055384',
+            'status' => false,
+            'message' => '463217055384 не является плательщиком налога на профессиональный доход'
+        ],'');
+        expect_that($model->insert());
     }
 }

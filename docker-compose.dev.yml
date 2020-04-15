@@ -93,8 +93,10 @@ services:
       - pgadmin:/var/lib/pgadmin
     depends_on:
       - db
+      - db-test
     links:
       - db:${DB_HOST}
+      - db-test:${DB_TEST_HOST}
     restart: always
     networks:
       - proxy
