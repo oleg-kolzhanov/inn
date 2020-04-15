@@ -182,7 +182,7 @@ services:
     working_dir: /etc/nginx
     restart: always
     environment:
-      - VIRTUAL_HOST=${APP_HOST},www.${APP_HOST},backend.${APP_HOST},www.backend.${APP_HOST},api.${APP_HOST}
+      - VIRTUAL_HOST=${APP_HOST},backend.${APP_HOST}
       - VIRTUAL_PORT=${APP_PORT}
       - VIRTUAL_NETWORK=proxy
       - HTTPS_METHOD=nohttps
